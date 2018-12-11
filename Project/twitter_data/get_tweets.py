@@ -16,6 +16,7 @@ long_tweet_sentences = []
 
 #setting character length
 short_sentence_threshold = 55
+long_sentence_threshold = 175
 
 def preprocess(tweets):
     for tweet in tweets:
@@ -28,10 +29,11 @@ def preprocess(tweets):
         tweet_sentences = filtered_tweet_text.split('. ')
         for sentence in tweet_sentences:
             if sentence != '':
-                if len(sentence) > short_sentence_threshold:
-                    long_tweet_sentences.append(sentence)
-                else:
+                len_sents = len(sentence)
+                if len_sents < short_sentence_threshold:
                     short_tweet_sentences.append(sentence)
+                elif len_sents > short_sentence_threshold and len_sents < long_sentence_threshold:
+                    long_tweet_sentences.append(sentence)
 
 
 def write_data_to_file(filename, data_set):
